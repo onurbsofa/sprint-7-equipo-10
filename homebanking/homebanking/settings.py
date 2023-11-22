@@ -37,7 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Clientes'
+    'Clientes',
+    'Cuentas',
+    'Movimientos',
+    'Tarjetas',
+    'Prestamos',
+    'Login',
+    'Negocio',
 ]
 
 MIDDLEWARE = [
@@ -77,7 +83,7 @@ WSGI_APPLICATION = 'homebanking.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'C:/Users/brufa\Documents/ITBA/sprint6/itbank.db ',
+        'NAME': './itbank.db ',
     }
 }
 
