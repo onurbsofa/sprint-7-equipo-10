@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from Clientes.views import DatosCliente
+from Prestamos.views import solicitud_prestamo 
 
 from Login.views import LoginView, LogoutView, RegisterView, HomeView
 from Cuentas.views import CuentasCliente
@@ -29,4 +30,5 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(),name='logout'),
     path('usuario/', DatosCliente.as_view(), name='datosCliente'),
     path('cuentas/', CuentasCliente.as_view(), name='cuentasCliente'),
+    path('solicitud_prestamo/', solicitud_prestamo, name='solicitud_prestamo'),
 ]
