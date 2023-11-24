@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            text-align: center; 
+        }
+
+        h1 {
+            color: #333;
+            margin-top: 20px; 
+        }
+
+        form {
+            max-width: 600px;
+            margin: 20px auto; 
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left; 
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        input[type="submit"] {
+            padding: 8px;
+            margin-bottom: 16px;
+        }
+
+        input[type="submit"] {
+            background-color: #4876E1;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 20px;
+            border: none; 
+        }
+
+        input[type="submit"]:hover {
+            background-color:#5484F3; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Solicitud de Préstamos</h1>
+    <form method="post" action="{% url 'solicitud_prestamo' %}">
+        {% csrf_token %}
+        <label for="{{ form.loan_type.id_for_label }}">Tipo de préstamo:</label>
+        {{ form.loan_type }}<br>
+        <label for="{{ form.loan_date.id_for_label }}">Fecha de inicio:</label>
+        {{ form.loan_date_label }} {{ form.loan_day }} / {{ form.loan_month }} / {{ form.loan_year }} <br>
+        <label for="{{ form.loan_total.id_for_label }}">Monto de préstamo:</label>
+        {{ form.loan_total }}<br>
+        <input type="submit" value="Enviar solicitud">
+    </form>
+</body>
+</html>
