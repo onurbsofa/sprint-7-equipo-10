@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Cliente(models.Model):
-    usuario = models.OneToOneField(User, on_delete=models.CASCADE)
     customer_id = models.AutoField(primary_key=True)
     customer_name = models.TextField()
     customer_surname = models.TextField()  # This field type is a guess.
