@@ -5,13 +5,56 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}Título por defecto{% endblock %}</title>
+  {% load static %}<!-- NO FUNCIONA, ARREGLAR -->
+  <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+  <style>
+    .navbar {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #333;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 40px;
+    }
+
+    .navbar-item {
+      float: left;
+      display: block;
+      text-align: center;
+      text-decoration: none;
+      font-size: 17px;
+    }
+
+    .navbar-item h3 {
+      color: white;
+      text-align: center;      
+      padding: 14px 16px;
+      text-decoration: none;  
+    }
+
+    .navbar-item a {
+      color: white;
+      text-align: center;      
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    .navbar-item a:hover {
+      background-color: #111;
+    }
+  </style>
 </head>
 <body>  
   <h2>Bienvenido a ITBANK</h2>
   {% if user.is_authenticated %}
-    <ul>
-      <li>Hola {{ user.username }}</li>
-      <li><a href="{% url 'logout' %}">Cerrar Sesión</a></li>
+    <ul class="navbar">
+      <li class="navbar-item"><h3>Hola {{ user.username }}</h3></li>
+      <li class="navbar-item"><a href="{% url 'cuentasCliente' %}">Cuentas</a></li>
+      <li class="navbar-item"><a href="{% url 'datosCliente' %}">Mis Datos</a></li>
+      <li class="navbar-item"><a href="{% url 'logout' %}">Cerrar Sesión</a></li>
     </ul>
 
     {% block content %}{% endblock %}
