@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Solicitar Tarjeta{% endblock %}
+
+{% block content %}
+<h1>Solicitud de Tarjetas</h1>
+    <form method="post" action="{% url 'solicitudTarjeta' %}">
+        {% csrf_token %}
+        <label for="{{ form.tipo.id_for_label }}">Tipo de tarjeta:</label>
+        {{ form.tipo }}<br>
+        <label for="{{ form.marca.id_for_label }}">Marca de tarjeta:</label>
+        {{ form.marca }}<br>
+        <input type="submit" value="Enviar solicitud">
+    </form>  
+{% endblock %}

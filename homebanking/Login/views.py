@@ -5,6 +5,7 @@ from django.views import View
 from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
 from Login.models import UserProfile
+from Clientes.models import Cliente
 from .forms import CustomAuthenticationForm, CustomUserCreationForm
 
 # Create your views here.
@@ -17,8 +18,9 @@ class RegisterView(View):
     def post(self,request):
         form=CustomUserCreationForm(request.POST)
         if form.is_valid():
-            user=form.save()  # Make sure to save the User before creating the UserProfile
-            UserProfile.objects.create(user_id=user, customer_id=form.cleaned_data.get('customer_id'))
+            cliente = Cliente.objects.get(customer_id=form.cleaned_data.get('customer_id'))
+            user=form.save()  # Make sure to save the User before creating the UserProfile            
+            UserProfile.objects.create(user=user, customer=cliente)
             login(request,user)
             return redirect('home')
         return render(request,'register.html',{'form':form})

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load mathfilters %}
+
+{% block title %}Cuentas de {{cliente.customer_name}}{% endblock %}
+
+{% block content %}
+<a href="./solicitar">Solicita una cuenta ahora!</a>
+<h2>Cuentas a nombre de {{cliente.customer_name}} {{cliente.customer_surname}}</h2>
+
+{% if cuentas %}
+  <ul>
+    {% for cuenta in cuentas %}
+      <li>Numero: {{cuenta.account_id}}</li>
+      <li>Saldo: ${{ cuenta.balance|div:"100"|floatformat:2 }}</li>    
+      <li>Tipo: {{cuenta.tipo}}</li>
+      <li>Iban: {{cuenta.iban}}</li>
+      <li>-------------------------------------------------</li>
+    {% endfor %}
+  </ul>
+{% else %}
+    <p>No tenés cuentas</p>
+{% endif %}
+  
+{% endblock %}
+```

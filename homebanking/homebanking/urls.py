@@ -17,10 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from Clientes.views import DatosCliente
-from Prestamos.views import solicitud_prestamo 
-
+from Prestamos.views import PrestamosCliente, SolicitarPrestamo
+from Cuentas.views import CuentasCliente, SolicitarCuenta
 from Login.views import LoginView, LogoutView, RegisterView, HomeView
-from Cuentas.views import CuentasCliente
+from Tarjetas.views import SolicitarTarjeta, TarjetasCliente
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,5 +31,9 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(),name='logout'),
     path('usuario/', DatosCliente.as_view(), name='datosCliente'),
     path('cuentas/', CuentasCliente.as_view(), name='cuentasCliente'),
-    path('solicitud_prestamo/', solicitud_prestamo, name='solicitud_prestamo'),
+    path('cuentas/solicitar', SolicitarCuenta.as_view(), name='solicitudCuenta'),
+    path('prestamos/', PrestamosCliente.as_view(), name='prestamosCliente'),
+    path('prestamos/solicitar', SolicitarPrestamo.as_view(), name='solicitudPrestamo'),
+    path('tarjetas/', TarjetasCliente.as_view(), name='tarjetasCliente'),
+    path('tarjetas/solicitar', SolicitarTarjeta.as_view(), name='solicitudTarjeta'),    
 ]

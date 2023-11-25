@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Tarjetas{% endblock %}
+
+{% block content %}
+<a href="./solicitar">Solicita una tarjeta ahora!</a>
+
+<h2>Mis tarjetas</h2>
+
+{% if tarjetas|length > 0 %}
+    <ul>
+        {% for tarjeta in tarjetas %}
+        <li>Numero: {{tarjeta.numero}}</li>
+        <li>Tipo: {{tarjeta.tipo}}</li>
+        <li>Marca: {{tarjeta.marca.marca}}</li>
+        <li>Fecha de emisión: {{tarjeta.fechaotorgamiento}}</li>
+        <li>Fecha de vencimiento: {{tarjeta.fechaexpiracion}}</li>
+        <li>CVV: {{tarjeta.cvv}}</li>
+        <li>-------------------------------------------------</li>
+
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No tenés tarjetas</p>
+{% endif %}
+
+{% endblock %}
+```

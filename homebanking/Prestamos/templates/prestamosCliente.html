@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load mathfilters %}
+
+{% block title %}Préstamos{% endblock %}
+
+{% block content %} 
+
+  <a href="./solicitar">Solicita un prestamo ahora!</a>
+
+  <h2>Préstamos solicitados:</h2>
+  {% if prestamos|length > 0 %}
+    <ul>
+      {% for prestamo in prestamos %}
+        <li>Id: {{prestamo.loan_id}}</li>
+        <li>Tipo: {{prestamo.loan_type}}</li>
+        <li>Fecha Inicio: {{prestamo.loan_date}}</li>
+        <li>Total: ${{prestamo.loan_total|div:"100"|floatformat:2 }}</li>     
+        <li>-------------------------------------------------</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No hay préstamos solicitados.</p>
+  {% endif %}
+
+{% endblock %}
+```

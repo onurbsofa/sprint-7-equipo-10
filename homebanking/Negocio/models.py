@@ -55,7 +55,7 @@ class Tipocliente(models.Model):
         db_table = 'tipoCliente'
 
 
-class Tipocuenta(models.Model):
+class TipoCuenta(models.Model):
     tipo_cuen = models.CharField(primary_key=True, blank=True, null=False, max_length=45)
 
     class Meta:

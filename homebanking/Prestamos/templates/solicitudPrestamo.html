@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Solicitar Prestamo{% endblock %}
+
+{% block content %}
+<h1>Solicitud de Préstamos</h1>
+    <form method="post" action="{% url 'solicitudPrestamo' %}">
+        {% csrf_token %}
+        <label for="{{ form.loan_type.id_for_label }}">Tipo de préstamo:</label>
+        {{ form.loan_type }}<br>
+        <label for="{{ form.loan_total.id_for_label }}">Monto de préstamo:</label>
+        {{ form.loan_total }}<br>
+        <input type="submit" value="Enviar solicitud">
+    </form>  
+{% endblock %}

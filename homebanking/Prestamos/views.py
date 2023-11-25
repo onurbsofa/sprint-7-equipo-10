@@ -1,53 +1,34 @@
+from datetime import datetime
 from django.shortcuts import render, redirect
-from django.http import Http404 
+from django.views import View
+
+from Clientes.models import Cliente
 from .forms import SolicitudPrestamoForm
 from .models import Prestamo
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-@login_required
-def solicitud_prestamo(request):
-    if request.method == 'POST':
+
+class SolicitarPrestamo(LoginRequiredMixin, View):
+    def get(self, request):
+        form = SolicitudPrestamoForm()
+        return render(request, 'solicitudPrestamo.html', {'form': form})
+
+    def post(self, request):
         form = SolicitudPrestamoForm(request.POST)
         if form.is_valid():
-            solicitud = form.save(commit=False)
-            
-            solicitud.customer = request.user.cliente
-
-            tipo_cliente = obtener_tipo_cliente(request.user) 
-            monto_maximo = obtener_monto_maximo(tipo_cliente)
-
-            monto_solicitado = int(solicitud.loan_total)
-
-            if monto_solicitado <= monto_maximo:
-                solicitud.aprobada = True
-            else:
-                solicitud.aprobada = False
-
-            solicitud.save()
-            messages.success(request, 'La solicitud de préstamo fue enviada con éxito.')
-            return redirect('inicio.html')  
+            loan_type = form.cleaned_data.get('loan_type')
+            loan_total = form.cleaned_data.get('loan_total')            
+            loan_date = datetime.now().date().strftime('%Y-%m-%d')
+            customer_id = Cliente.objects.get(customer_id=request.user.userprofile.customer_id)
+            Prestamo.objects.create(loan_type=loan_type, loan_date=loan_date, loan_total=loan_total, customer_id=customer_id)
+            messages.success(request, 'Prestamo solicitado con exito')
+            return redirect('home')
         else:
-            messages.error(request, 'Hubo un error en el formulario. Por favor, revise los datos e inténtelo nuevamente.')
-            raise Http404("Página no encontrada")
-
-    else:
-        form = SolicitudPrestamoForm()
-
-    return render(request, 'solicitud_prestamo.html', {'form': form})
-
-def obtener_tipo_cliente(usuario):
-    if usuario.is_authenticated:
-        return usuario.tipo_cliente
-    else:
-        return 'None'
-
-def obtener_monto_maximo(tipo_cliente):
-    if tipo_cliente == 'BLACK':
-        return 500000
-    elif tipo_cliente == 'GOLD':
-        return 300000
-    elif tipo_cliente == 'CLASSIC':
-        return 100000
-    else:
-        return 0
+            print(form.errors)
+            return render(request, 'solicitudPrestamo.html', {'form': form})
+        
+class PrestamosCliente(LoginRequiredMixin, View):
+    def get(self, request):
+        prestamos = Prestamo.objects.filter(customer_id=request.user.userprofile.customer_id)
+        return render(request, 'prestamosCliente.html', {'prestamos': prestamos})
