@@ -10,6 +10,7 @@ class Cuenta(models.Model):
     balance = models.IntegerField()
     iban = models.TextField()
     tipo = models.CharField(blank=True, null=True, max_length=45)
+    
 
     class Meta:
         managed = False
