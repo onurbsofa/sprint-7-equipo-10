@@ -10,6 +10,8 @@
         {{ form.loan_type }}<br>
         <label for="{{ form.loan_total.id_for_label }}">Monto de préstamo:</label>
         {{ form.loan_total }}<br>
+        <p>Tu tipo de cliente es: {{ customer_type }}</p>
+        <p>El límite de préstamo para tu tipo de cliente es: ${{ preapproval_amount }}</p>
         <input type="submit" value="Enviar solicitud">
     </form>  
 {% endblock %}
