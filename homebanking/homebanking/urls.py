@@ -15,13 +15,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from Clientes.views import DatosCliente
 from Prestamos.views import PrestamosCliente, SolicitarPrestamo
 from Cuentas.views import CuentasCliente, SolicitarCuenta
 from Login.views import LoginView, LogoutView, RegisterView, HomeView
 from Tarjetas.views import SolicitarTarjeta, TarjetasCliente
-
+from Clientes.views import DatosClienteList
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -35,5 +35,6 @@ urlpatterns = [
     path('prestamos/', PrestamosCliente.as_view(), name='prestamosCliente'),
     path('prestamos/solicitar', SolicitarPrestamo.as_view(), name='solicitudPrestamo'),
     path('tarjetas/', TarjetasCliente.as_view(), name='tarjetasCliente'),
-    path('tarjetas/solicitar', SolicitarTarjeta.as_view(), name='solicitudTarjeta'),    
+    path('tarjetas/solicitar', SolicitarTarjeta.as_view(), name='solicitudTarjeta'),
+    path('api/clientes', DatosClienteList.as_view(), name='api-clientes'),
 ]

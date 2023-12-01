@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -22,3 +21,6 @@ class Cliente(models.Model):
     class Meta:
         managed = False
         db_table = 'cliente'
+
+    def __str__(self):
+        return self.customer_name + " " + self.customer_surname
