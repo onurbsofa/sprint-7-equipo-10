@@ -1,14 +1,37 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth import login,logout, authenticate
+from django.contrib.auth import login, logout, authenticate
 from django.views import View
 from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
 from Login.models import UserProfile
 from Clientes.models import Cliente
 from .forms import CustomAuthenticationForm, CustomUserCreationForm
+from rest_framework import status
 
-# Create your views here.
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from .serializers import UserSerializer, RegisterUserSerializer
+from django.contrib.auth.models import User
+
+class LoginAPIView(APIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, format=None):
+        user = request.user
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+        
+class RegisterAPIView(APIView):
+    def post(self, request):
+        serializer = RegisterUserSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class RegisterView(View):
     def get(self,request):
@@ -48,3 +71,4 @@ class LogoutView(View):
 
 class HomeView(TemplateView):
     template_name='home.html'
+
