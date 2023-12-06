@@ -19,7 +19,7 @@ from django.urls import path, include
 from Clientes.views import DatosCliente
 from Prestamos.views import PrestamosCliente, SolicitarPrestamo
 from Cuentas.views import CuentasCliente, SolicitarCuenta
-from Login.views import LoginView, LogoutView, RegisterView, HomeView,  LoginAPIView
+from Login.views import LoginView, LogoutView, RegisterView, HomeView,  LoginAPIView, RegisterAPIView
 from Tarjetas.views import SolicitarTarjeta, TarjetasCliente
 from Clientes.views import DatosClienteList
 
@@ -38,4 +38,5 @@ urlpatterns = [
     path('tarjetas/solicitar', SolicitarTarjeta.as_view(), name='solicitudTarjeta'),
     path('api/clientes', DatosClienteList.as_view(), name='api-clientes'),
     path('api-auth/', LoginAPIView.as_view(), name='api-login'),
+    path('api-auth/register/', RegisterAPIView.as_view(), name='api-register'),
 ]

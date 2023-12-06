@@ -15,6 +15,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import UserSerializer, RegisterUserSerializer
 from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+from rest_framework.permissions import AllowAny
+
 
 class LoginAPIView(APIView):
     authentication_classes = [SessionAuthentication, BasicAuthentication]
@@ -25,12 +28,18 @@ class LoginAPIView(APIView):
         serializer = UserSerializer(user)
         return Response(serializer.data)
         
+
+user = get_user_model()
 class RegisterAPIView(APIView):
+    permission_classes = [AllowAny]
     def post(self, request):
         serializer = RegisterUserSerializer(data=request.data)
         if serializer.is_valid():
-            user = serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            validated_data = serializer.validated_data
+            customer = validated_data.pop('customer')
+            user = User.objects.create_user(**validated_data)
+            UserProfile.objects.create(user=user, customer=customer)  # Create a UserProfile instance
+            return Response(UserSerializer(user).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class RegisterView(View):
